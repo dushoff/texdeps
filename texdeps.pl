@@ -4,12 +4,14 @@ use 5.10.0;
 undef $/;
 
 my $basename = $ARGV[0];
+
 $basename =~ s/\.tex$//;
+my $target =  ".texdeps/$basename.out";
 
 ### Read and parse
 my $f = <>;
 my (%inputs, %packages, %graphics, %bibs, %dirs);
-$f =~ s/.*%.*no_flextex.*//;
+$f =~ s/.*%.*no_texdeps.*//;
 
 # Inputs (add include!)
 $f =~ s/^%.*//;
@@ -47,26 +49,26 @@ while ($f =~ s/\\(?:bibliography|addbibresource)\s*{(.*?)}//){
 
 ### Write makefile stuff
 
-## These rules are needed to _override_ more probing rules in flextex.mk
-say "$basename.aux: $basename.tex; ", '$(latex) ', $basename;
-say "$basename.reqs: ;", 'touch $@', "\n";
+say "$target: ; touch \$@";
+say"";
 
 if (%graphics){
-	say "$basename.reqs: ", join " ", keys %graphics, "\n";
+	say "$target: ", join " ", keys %graphics, "\n";
+	say"";
 }
 
 if (%inputs){
-	say "$basename.reqs: ", join " ", keys %inputs;
-	my @deps = map {s|.tex$|.reqs|; $_} keys %inputs;
+	say "$target: ", join " ", keys %inputs;
+	my @deps = map {s|.tex$|.deps|; $_} keys %inputs;
 
-	# Some issue from newlatex about crossing directories; maybe solved by hiding at the file level?
+	# Some issue about crossing directories; maybe solved now? 
 	# @deps = grep(!/\//, @deps); 
-	say "$basename.reqs: ", join " ", @deps if @deps;
+	say "$target: ", join " ", @deps if @deps;
 	say"";
 }
 
 if (%bibs){
-	say "$basename.reqs: $basename.bbl";
+	say "$target: $basename.bbl";
 	say "$basename.bbl: " . join " ", keys %bibs, "\n";
 }
 
@@ -76,4 +78,5 @@ foreach(keys %inputs, keys %packages, keys %graphics, keys %bibs)
 	$dirs{$_} = $_ if $_;
 }
 
-say "# $basename.tex: ", join " ", keys %dirs;
+# Not clear why this was suppressed
+say "$target: ", join " ", keys %dirs;
