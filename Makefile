@@ -16,10 +16,17 @@ include sub.mk
 
 ## Content
 
+Sources += $(wildcard *.pl)
+Sources += $(wildcard *.tex *.bib *.md)
+Sources += $(wildcard *.R)
+
+test.pdf: test.tex
+
 ######################################################################
 
 -include $(ms)/git.mk
 -include $(ms)/visual.mk
+-include texdeps.mk
 
 # -include $(ms)/wrapR.mk
 # -include $(ms)/oldlatex.mk
