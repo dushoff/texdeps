@@ -17,8 +17,10 @@ target.mk
 *.Rlog
 *.r
 .Rhistory
-
 *.wrapR.*
+   
+.texdeps/
+*.deptest
 
 local.mk
 
@@ -26,3 +28,4 @@ dotdir/
 clonedir/
 
 *.makestuff
+
