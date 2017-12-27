@@ -34,10 +34,10 @@ proposal.pdf: proposal.tex
 
 ## A file that includes another file
 ## The other file includes a made plot
-test.deptest: test.tex texdeps.pl
 test.pdf: test.tex
 
 #### Rules for testing stuff
+test.deptest: test.tex texdeps.pl
 %.deptest: .texdeps/%.mk texdeps.pl
 	$(copy)
 
@@ -46,11 +46,10 @@ texclean:
 
 ######################################################################
 
+-include $(ms)/texdeps.mk
 -include $(ms)/git.mk
 -include $(ms)/visual.mk
 
-Sources += texdeps.mk
--include texdeps.mk
 
 -include $(ms)/wrapR.mk
 # -include $(ms)/oldlatex.mk
