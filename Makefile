@@ -7,36 +7,27 @@ target: $(target)
 
 ##################################################################
 
-Sources += Makefile .gitignore README.md sub.mk LICENSE.md
-include sub.mk
-# include $(ms)/perl.def
+Sources += Makefile .gitignore README.md
+# include makestuff/perl.def
+
+vim_session: 
+	bash -cl "vmt makestuff/texi.mk makestuff/texdeps.mk"
 
 ##################################################################
+
+wrap_makeR = something
 
 ## Content
 
 Sources += $(wildcard *.pl)
 Sources += $(wildcard *.tex *.bib *.md)
-Sources += $(wildcard *.R)
-
-## A simple file with nothing going on. Should be easy.
-simple.pdf: simple.tex
-
-## A picture that needs to be made by R
-pic.pdf: pic.tex
-
-reps:
-	make -dr > 1.log
-	make -dr > 2.log
-	make -dr > 3.log
-	make -dr > 4.log
+pic.tex.pdf: pic.tex
+## pic.pdf: pic.tex
 
 ## A file with a bibliography
 proposal.pdf: proposal.tex
-## This is _approximately_ working
-## There are problems with this particular bib
-## also questions about bibtex vs. biber
-## Postponing a bit
+
+## Need to try a biber file
 
 ## A file that includes another file
 ## The other file includes a made plot
@@ -59,10 +50,18 @@ texclean:
 
 ######################################################################
 
--include $(ms)/texdeps.mk
--include $(ms)/git.mk
--include $(ms)/visual.mk
+msrepo = https://github.com/dushoff
 
+Makefile: makestuff/Makefile
+makestuff/Makefile:
+	git clone $(msrepo)/makestuff
+	ls makestuff/Makefile
 
--include $(ms)/wrapR.mk
-# -include $(ms)/oldlatex.mk
+-include makestuff/os.mk
+
+## -include makestuff/texdeps.mk
+-include makestuff/texi.mk
+-include makestuff/makeR.mk
+
+-include makestuff/git.mk
+-include makestuff/visual.mk
