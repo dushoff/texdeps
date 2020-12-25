@@ -1,3 +1,3 @@
-plot((1:10)^(1/2)
+plot((1:8)^(4/3)
 	, ylab="Small value"
 )

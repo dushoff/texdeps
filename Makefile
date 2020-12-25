@@ -19,8 +19,9 @@ wrap_makeR = something
 
 ## Content
 
-Sources += $(wildcard *.pl)
+Sources += $(wildcard *.pl *.R)
 Sources += $(wildcard *.tex *.bib *.md)
+
 pic.tex.pdf: pic.tex
 ## pic.pdf: pic.tex
 
