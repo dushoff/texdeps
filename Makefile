@@ -24,7 +24,7 @@ Sources += $(wildcard *.pl *.R)
 Sources += $(wildcard *.tex *.bib *.md)
 
 pic.tex.pdf: pic.tex
-## pic.pdf: pic.tex
+pic.pdf: pic.tex
 
 ## A file with a bibliography
 proposal.pdf: proposal.tex
