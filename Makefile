@@ -16,7 +16,6 @@ vim_session:
 ##################################################################
 
 Ignore += webpix
-
 wrap_makeR = something
 
 ## Content
